@@ -1,39 +1,109 @@
-# IntelliHub — AI-Assisted Fraud Investigation Platform
+# Project Background
 
-IntelliHub is a fraud case management dashboard for a support/investigations team. It combines a case/transaction/policy tracker with an AI chatbot that answers questions using retrieval-augmented generation (RAG) over the team's own cases, policies, transactions, and internal documents (PDF/Word/Excel) — with role-based access control enforced at retrieval time, not just in the UI.
+IntelliHub was originally developed collaboratively as a team project for a **FinTech Hackathon**, where our team successfully advanced to the **finalist stage**.
+
+The project focuses on using AI-assisted knowledge retrieval to support fraud investigation, case management, and internal decision-making in a FinTech environment.
+
+**Original Team Repository**:
+https://github.com/LYYGG22/TehCBeng
+
+This repository is maintained as my personal portfolio copy of the project for showcasing my experience and contributions during the hackathon.
+
+---
+
+## My Contributions
+
+My primary contribution to IntelliHub focused on the frontend and user interface (UI) of the prototype. I worked on translating the team's ideas and system requirements into a functional and easy-to-understand interface for staff and managers.
+
+My contributions included:
+
+**Dashboard UI** — Worked on the dashboard interface and presentation of key information to provide users with a clear overview of the system.
+**Knowledge Search Interface** — Worked on the Knowledge Search feature, including the frontend search interaction and presentation of retrieved internal information.
+**Login Interface** — Contributed to parts of the login page and authentication-related user flow.
+**UI/UX Development** — Focused mainly on the overall interface design, page layouts, navigation, visual consistency, and usability across the prototype.
+**Frontend Integration** — Helped connect frontend components with the project's backend functions and data to ensure that key prototype features could be demonstrated during the hackathon.
+
+Through this project, I gained practical experience in **rapid prototyping, frontend development, UI/UX design, teamwork, problem-solving, and integrating different system components under hackathon time constraints**.
+
+**Note**: IntelliHub was developed collaboratively by the hackathon team. The features described in this repository represent the team's overall solution, while the section above highlights my individual areas of contribution.
+
+---
 
 ## Quick Start
 
 ### Prerequisites
 
-- **PHP 8.0+** with the `pdo_sqlite` extension enabled (bundled with most PHP installs)
-- **Composer** (for the PDF/Word/Excel parsing libraries)
-- A modern browser
-- Internet access (for the AI chatbot's model calls and the Markdown-rendering CDN script)
+* **PHP 8.0+** with the `pdo_sqlite` extension enabled
+* **Composer**
+* A modern web browser
+* Internet access for AI chatbot model requests and external CDN resources
+* An **OpenRouter API key** for the chatbot
+
+---
 
 ### Setup
+
+Install the required PHP dependencies:
 
 ```bash
 composer install
 ```
 
-This installs the three PHP libraries used to parse uploaded documents (see [Dependencies](#dependencies) below).
+This installs the libraries used to process PDF, Word, and Excel documents.
 
-Then set up the chatbot's API key:
+Next, create your local environment file:
 
 ```bash
 cp .env.example .env
 ```
 
-**Why this step is needed:** `.env` is the file the app actually reads, but it's gitignored on purpose so a real secret key never gets committed to the repo — so a fresh clone never has one, even though it has `.env.example`. This command just creates your local `.env` from that template. Skip it and the chatbot will show `OPENROUTER_API_KEY is not set`.
+For Windows PowerShell, you can use:
 
-`.env.example` has a working OpenRouter key pre-filled for judging/evaluation, so the chatbot works immediately with no account needed. **This key is disposable and will be revoked after the competition** — if you're using this project past judging, replace it in `.env` with your own key from [openrouter.ai](https://openrouter.ai/settings/integrations).
+```powershell
+Copy-Item .env.example .env
+```
 
-The database is **created automatically** on first request — `Logic/db.php` builds a SQLite file at `Data/app.db`, creates the schema, and seeds it from the JSON files in `Data/`. There is no separate migration step.
+Open the newly created `.env` file and add your own OpenRouter API key:
 
-### Run
+```env
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+```
 
-From the repository root:
+You can obtain an API key from OpenRouter.
+
+> **Important:**
+> The `.env` file is excluded from Git through `.gitignore`, so your actual API key will not be uploaded to the repository.
+> Do not place a real API key inside `.env.example`.
+
+The `.env.example` file is provided only as a configuration template.
+
+If the API key is not configured, the chatbot will return:
+
+```text
+OPENROUTER_API_KEY is not set
+```
+
+---
+
+### Database Setup
+
+The database is created automatically when the application runs for the first time.
+
+`Logic/db.php` creates the SQLite database at:
+
+```text
+Data/app.db
+```
+
+It also creates the required tables and loads initial data from the JSON files stored inside the `Data/` directory.
+
+No manual database migration is required.
+
+---
+
+## Run the Application
+
+From the repository root, run:
 
 ```bash
 php -S localhost:8000
@@ -41,74 +111,353 @@ php -S localhost:8000
 
 Then open:
 
-```
+```text
 http://localhost:8000/Interface/login.html
 ```
 
-### Demo logins
+Alternatively, the project can also be placed inside an XAMPP `htdocs` directory and accessed through localhost.
 
-| Role    | Email                      | Password    |
-|---------|-----------------------------|-------------|
-| Manager | manager@intellihub.com      | manager123  |
-| Staff   | staff@intellihub.com        | staff123    |
+---
 
-Manager and Staff see different data/features (e.g. Process Insights is Manager-only); use both to see the access control in action.
+## Demo Accounts
 
-## What to Try (Test Plan)
+| Role    | Email                                                   | Password   |
+| ------- | ------------------------------------------------------- | ---------- |
+| Manager | [manager@intellihub.com](mailto:manager@intellihub.com) | manager123 |
+| Staff   | [staff@intellihub.com](mailto:staff@intellihub.com)     | staff123   |
 
-1. **Log in as Staff**, browse Cases, open a case, check the Knowledge search.
-2. **Ask the chatbot** a question about a fraud pattern (e.g. "how do we handle account takeover?") — it answers using retrieved cases/policies and cites its sources; click a citation to open the source document.
-3. **Log in as Manager**, visit **Process Insights** (Manager-only) to see automation candidates and policy coverage gaps derived from case history.
-4. **Analysis & Report page** — generate a report and export it as **PDF** or **Excel** from the format dropdown next to the Export button.
-5. **Permission check**: ask the chatbot the same question as Staff and as Manager where a source document is internally marked `Access: Manager` (see `Data/Documents/device_verification_guide.docx`) — Staff gets no answer from that source, Manager does.
+Manager and Staff accounts have different access permissions.
 
-## Architecture Notes
+For example, **Process Insights** is available only to Manager users.
 
-### Layout
+---
 
+## Features to Try
+
+### 1. Fraud Case Management
+
+Log in as Staff and browse fraud cases.
+
+Users can:
+
+* View fraud cases
+* Open individual case details
+* Review transaction information
+* View related policies and documents
+* Search internal knowledge sources
+
+---
+
+### 2. AI-Assisted Chatbot
+
+Ask the chatbot questions related to fraud investigation or internal procedures.
+
+Example:
+
+```text
+How do we handle account takeover?
 ```
-Interface/        Frontend — one PHP page per view (dashboard.php, cases.php, reports.php, …),
-                   sharing a header/footer via Interface/partials/chrome_head.php and chrome_foot.php.
-                   Interface/assets/ holds the page-specific JS (assets/pages/*.js) plus
-                   shared helpers (common.js, shared-analytics.js).
-Logic/             Backend — plain PHP endpoints (no framework), one file per concern:
-                   auth.php, data.php, chatbot.php, document.php, case_actions.php, db.php.
-Data/               Source-of-truth JSON (fraud_cases.json, policies.json, transactions.json),
-                   the raw source documents (Data/Documents/), the generated document text
-                   cache (documents_cache.json), and the generated SQLite DB (app.db, gitignored).
-vendor/             Composer dependencies (gitignored).
+
+The chatbot retrieves relevant internal information before generating its answer and provides references to the sources used.
+
+---
+
+### 3. Knowledge Search
+
+The Knowledge Search feature allows users to search through:
+
+* Fraud cases
+* Policies
+* Transactions
+* Internal documents
+
+Search results are filtered according to the user's access level.
+
+---
+
+### 4. Manager Process Insights
+
+Log in using the Manager account and open:
+
+```text
+Process Insights
 ```
 
-This is a **multi-page PHP app**, not a single-page app — each view is its own `.php` file and reloads the page on navigation. (There is also a `dashboard.html` + `assets/app.js` — an earlier single-page prototype that predates the current multi-page structure. It's no longer linked from anywhere and isn't the live app; safe to ignore or delete.)
+This section provides information such as:
 
-### Data flow
+* Potential automation opportunities
+* Repeated case patterns
+* Process improvement opportunities
+* Policy coverage gaps
 
-- `Data/*.json` are the files you actually hand-edit. On **every request**, `db.php` re-syncs their contents into the SQLite tables (`cases`, `policies`, `transactions`, `company_documents`) — so there's no separate "rebuild the DB" step when you edit a JSON file.
-- **Documents** (PDF/Word/Excel dropped into `Data/Documents/`) are different: they're binary files, so they go through a one-time extraction step. Run:
-  ```bash
-  php Logic/extract_documents.php
-  ```
-  This parses each file's text (via `smalot/pdfparser`, `phpoffice/phpword`, `phpoffice/phpspreadsheet`) into `Data/documents_cache.json`, which `db.php` then syncs like the other JSON sources. **New or changed files in `Data/Documents/` won't appear anywhere in the app — chatbot answers, document viewer, etc. — until this script is re-run.**
+This feature is restricted to Manager users.
 
-### Permission-aware retrieval
+---
 
-Every record (case, policy, transaction, document) can carry an `access_level` field (lowercase role name, e.g. `"manager"`; absent/`null` = visible to everyone). `Logic/retrieve_data.php`'s `canAccessDocument()` enforces this **before** anything reaches the AI's context or the Knowledge search results — a restricted record is filtered out at retrieval time, not hidden client-side.
+### 5. Analysis & Reports
 
-For documents extracted from `Data/Documents/`, `extract_documents.php` looks for an inline `Access: <Role>` marker in the document's own text (see `device_verification_guide.docx`) and maps it to the same `access_level` convention automatically.
+The Analysis & Report page allows users to review fraud-related information and generate reports.
 
-### AI Chatbot
+Reports can be exported as:
 
-`Logic/chatbot.php` does simple keyword-based retrieval (`retrieveRelevant()` in `retrieve_data.php`) over cases/policies/transactions/documents, filters by the current user's role, then sends the top matches as context to an LLM (via OpenRouter) to produce a grounded, cited answer. This is intentionally lightweight (no vector DB/embeddings) — appropriate for the dataset size here.
+* **PDF**
+* **Excel**
 
-### Report export
+The export process is handled directly in the browser.
 
-The Analysis & Report page's PDF and Excel export are generated **entirely client-side** in `Interface/assets/pages/reports.js` — the PDF is a hand-built minimal PDF document (no library), and the Excel file is SpreadsheetML XML that Excel opens natively. No server round-trip is needed to export.
+---
 
-## Dependencies
+### 6. Role-Based Permission Testing
 
-| Package | Purpose |
-|---|---|
-| `smalot/pdfparser` | Extracts text from `.pdf` source documents |
-| `phpoffice/phpword` | Extracts text from `.docx` source documents |
-| `phpoffice/phpspreadsheet` | Extracts text from `.xlsx` source documents |
-| `marked.js` (CDN, `cdnjs.cloudflare.com`) | Renders the chatbot's Markdown-formatted answers in the browser |
+Some internal documents are restricted to specific user roles.
+
+For example:
+
+```text
+Data/Documents/device_verification_guide.docx
+```
+
+contains Manager-level information.
+
+When Staff and Manager users perform the same search, restricted information is filtered according to their permissions.
+
+This allows the system to enforce access control before information reaches the AI chatbot.
+
+---
+
+# Architecture
+
+## Project Structure
+
+```text
+Interface/
+    Frontend pages and user interface components.
+
+    Includes individual PHP pages such as:
+    dashboard.php
+    cases.php
+    reports.php
+    knowledge.php
+
+    Shared UI components are stored in:
+    Interface/partials/
+
+    JavaScript and CSS files are stored in:
+    Interface/assets/
+
+
+Logic/
+    Backend PHP logic.
+
+    Includes:
+    auth.php
+    data.php
+    chatbot.php
+    document.php
+    case_actions.php
+    db.php
+    retrieve_data.php
+
+
+Data/
+    Contains the system data sources.
+
+    Includes:
+    fraud_cases.json
+    policies.json
+    transactions.json
+    documents_cache.json
+
+    Internal documents are stored in:
+    Data/Documents/
+
+
+vendor/
+    Composer dependencies.
+
+    This directory is excluded from Git.
+```
+
+IntelliHub currently uses a **multi-page PHP architecture** where individual pages are loaded separately during navigation.
+
+An earlier single-page prototype using `dashboard.html` and `assets/app.js` may also exist in the repository but is not part of the primary application flow.
+
+---
+
+# Data Flow
+
+JSON files inside the `Data/` directory act as editable source data.
+
+For example:
+
+```text
+Data/fraud_cases.json
+Data/policies.json
+Data/transactions.json
+```
+
+On application requests, `Logic/db.php` synchronizes this information with the SQLite database.
+
+This allows developers to update the JSON datasets without manually rebuilding the database.
+
+---
+
+## Document Processing
+
+Documents stored in:
+
+```text
+Data/Documents/
+```
+
+can include:
+
+* PDF
+* Word documents
+* Excel spreadsheets
+
+These files must first be converted into searchable text.
+
+Run:
+
+```bash
+php Logic/extract_documents.php
+```
+
+The extraction process uses document-processing libraries to convert the files into text and saves the results inside:
+
+```text
+Data/documents_cache.json
+```
+
+The resulting text can then be used by:
+
+* Knowledge Search
+* AI chatbot retrieval
+* Document viewing
+* Permission-aware search
+
+If a document is added or modified, the extraction script should be run again.
+
+---
+
+# Permission-Aware Retrieval
+
+Records such as cases, policies, transactions, and documents can contain an:
+
+```text
+access_level
+```
+
+field.
+
+Example:
+
+```json
+{
+  "access_level": "manager"
+}
+```
+
+If no access level is specified, the record can be available to all authorized users.
+
+`Logic/retrieve_data.php` checks the user's role before returning restricted information.
+
+This means access control is enforced during the retrieval process rather than relying only on frontend visibility.
+
+Restricted information therefore does not enter the chatbot's context for unauthorized users.
+
+For extracted documents, the system can also detect markers such as:
+
+```text
+Access: Manager
+```
+
+and convert them into the corresponding access-control level.
+
+---
+
+# AI Chatbot
+
+The AI chatbot is implemented mainly through:
+
+```text
+Logic/chatbot.php
+Logic/retrieve_data.php
+```
+
+The system performs lightweight keyword-based retrieval across:
+
+* Fraud cases
+* Policies
+* Transactions
+* Internal documents
+
+Relevant results are filtered based on the logged-in user's role.
+
+The retrieved information is then provided as context to an AI model through OpenRouter.
+
+The chatbot generates an answer based on this retrieved information rather than relying only on general model knowledge.
+
+This lightweight retrieval approach was selected because the prototype uses a relatively small dataset and does not require a full vector database or embedding infrastructure.
+
+---
+
+# Report Export
+
+The Analysis & Report page supports PDF and Excel export.
+
+The export functionality is handled mainly through:
+
+```text
+Interface/assets/pages/reports.js
+```
+
+PDF reports are generated directly in the browser, while Excel-compatible files are generated using SpreadsheetML XML.
+
+No additional server request is required during export.
+
+---
+
+# Dependencies
+
+| Package                    | Purpose                                                    |
+| -------------------------- | ---------------------------------------------------------- |
+| `smalot/pdfparser`         | Extract text from PDF documents                            |
+| `phpoffice/phpword`        | Extract text from Word `.docx` documents                   |
+| `phpoffice/phpspreadsheet` | Extract data from Excel `.xlsx` documents                  |
+| `marked.js`                | Render Markdown-formatted chatbot responses in the browser |
+
+---
+
+# Technologies Used
+
+* PHP
+* JavaScript
+* HTML
+* CSS
+* SQLite
+* JSON
+* OpenRouter API
+* Composer
+* RAG-style information retrieval
+
+---
+
+# Project Background
+
+IntelliHub was developed as a **FinTech Hackathon prototype** focused on improving fraud investigation, internal knowledge retrieval, and operational decision-making.
+
+The project explores how AI can assist support and investigation teams by combining internal organizational knowledge with fraud case information while maintaining role-based information access.
+
+This repository is maintained as a portfolio version of the hackathon project.
+
+---
+
+# Security Notes
+
+* API keys should never be committed to the repository.
+* Real API credentials should only be stored inside `.env`.
+* `.env` is excluded through `.gitignore`.
+* `.env.example` contains only configuration placeholders.
+* Role-based access restrictions are enforced during data retrieval.
