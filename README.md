@@ -33,6 +33,26 @@ Through this project, I gained practical experience in **rapid prototyping, fron
 
 ---
 
+## Screenshots
+
+### Dashboards
+Overview of fraud cases, transaction activities, and key operational information.
+<img width="1917" height="862" alt="image" src="https://github.com/user-attachments/assets/7ec13f7f-a1cb-410e-b5e9-77820cdec0e8" />
+
+### Knowledge Search
+Search interface for retrieving relevant information from internal cases, policies, transactions, and documents.
+<img width="1917" height="862" alt="image" src="https://github.com/user-attachments/assets/d0f951f8-2970-4ea7-a050-14bd59d78fc0" />
+
+### AI-Assisted Chatbot
+AI-assisted interface that retrieves relevant internal information to support fraud investigation and decision-making.
+<img width="1917" height="862" alt="image" src="https://github.com/user-attachments/assets/4dd748fe-b434-47c8-85b0-617d3e0cc785" />
+
+### Login
+Role-based login interface for Staff and Manager users.
+<img width="1917" height="866" alt="image" src="https://github.com/user-attachments/assets/d6e88464-2815-42e6-b57c-37dd56388e8b" />
+
+---
+
 ## Quick Start
 
 ### Prerequisites
