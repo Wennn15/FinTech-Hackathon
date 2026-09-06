@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Sign In — IntelliHub</title>
+		<link rel="stylesheet" href="assets/styles.css?v=20260821" />
+	</head>
+	<body>
+		<div class="login-page">
+			<div class="login-brand">
+				<div class="brand-content">
+					<p class="brand-eyebrow">Fraud operations platform</p>
+					<div class="brand-logo">
+						<div class="brand-logo-wrap">
+							<img
+								src="assets/logo.png?v=20260821"
+								alt="IntelliHub"
+								class="brand-logo-img"
+							/>
+						</div>
+					</div>
+					<p class="brand-tagline">
+						Your intelligent fraud investigation platform. Analyze transactions,
+						review cases, and access policies — all in one place.
+					</p>
+					<ul class="brand-features">
+						<li>AI-powered case analysis</li>
+						<li>Real-time transaction monitoring</li>
+						<li>Policy & compliance lookup</li>
+						<li>Secure investigation workspace</li>
+					</ul>
+					<div class="brand-assurance">
+						<span>Protected access</span>
+						<span>Role-based workspace</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="login-form-panel">
+				<div class="login-card">
+					<div class="login-card-logo-wrap">
+						<img
+							src="assets/logo.png?v=20260821"
+							alt="IntelliHub"
+							class="login-card-logo"
+						/>
+					</div>
+					<h1>Welcome back</h1>
+					<p class="login-subtitle">
+						Sign in to continue your fraud investigation workspace.
+					</p>
+
+					<div
+						id="errorAlert"
+						class="alert alert-error"
+						style="display: none"
+					></div>
+
+					<form id="loginForm">
+						<div class="form-group">
+							<label for="email">Email address</label>
+							<input
+								type="email"
+								id="email"
+								name="email"
+								placeholder="you@company.com"
+								required
+								autocomplete="email"
+							/>
+						</div>
+
+						<div class="form-group">
+							<label for="password">Password</label>
+							<input
+								type="password"
+								id="password"
+								name="password"
+								placeholder="Enter your password"
+								required
+								autocomplete="current-password"
+							/>
+						</div>
+
+						<div class="form-row">
+							<label class="checkbox-label">
+								<input type="checkbox" id="remember" />
+								Remember me
+							</label>
+						</div>
+
+						<button type="submit" class="btn btn-primary" id="loginBtn">
+							Sign in
+						</button>
+					</form>
+
+					<div class="demo-access">
+						<p>Demo access</p>
+						<div class="demo-access-options">
+							<button type="button" class="demo-access-option" data-email="manager@intellihub.com" data-password="manager123">
+								<strong>Manager</strong><span>Case review access</span>
+							</button>
+							<button type="button" class="demo-access-option" data-email="staff@intellihub.com" data-password="staff123">
+								<strong>Staff</strong><span>Investigation access</span>
+							</button>
+						</div>
+					</div>
+
+					<div class="login-footer">
+						Your session is secured and role-based.
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			const API = "../Logic/auth.php";
+
+			async function checkSession() {
+				const res = await fetch(`${API}?action=check`, {
+					credentials: "include",
+				});
+				const data = await res.json();
+				if (data.authenticated) {
+					window.location.href = "dashboard.php";
+				}
+			}
+
+			checkSession();
+
+			document.querySelectorAll(".demo-access-option").forEach((option) => {
+				option.addEventListener("click", () => {
+					document.getElementById("email").value = option.dataset.email;
+					document.getElementById("password").value = option.dataset.password;
+					document.getElementById("password").focus();
+				});
+			});
+
+			document
+				.getElementById("loginForm")
+				.addEventListener("submit", async (e) => {
+					e.preventDefault();
+
+					const btn = document.getElementById("loginBtn");
+					const errorAlert = document.getElementById("errorAlert");
+					errorAlert.style.display = "none";
+
+					btn.disabled = true;
+					btn.textContent = "Signing in…";
+
+					try {
+						const res = await fetch(`${API}?action=login`, {
+							method: "POST",
+							credentials: "include",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify({
+								email: document.getElementById("email").value,
+								password: document.getElementById("password").value,
+							}),
+						});
+
+						const data = await res.json();
+
+						if (!res.ok) {
+							errorAlert.textContent = data.error || "Login failed.";
+							errorAlert.style.display = "block";
+							return;
+						}
+
+						window.location.href = "dashboard.php";
+					} catch {
+						errorAlert.textContent = "Unable to connect to server.";
+						errorAlert.style.display = "block";
+					} finally {
+						btn.disabled = false;
+						btn.textContent = "Sign in";
+					}
+				});
+		</script>
+	</body>
+</html>

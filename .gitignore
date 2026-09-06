@@ -1,0 +1,12 @@
+# Secrets
+/.env
+
+# Dependencies
+/vendor/
+
+# Runtime/generated database
+Data/app.db
+
+# OS files
+.DS_Store
+Thumbs.db

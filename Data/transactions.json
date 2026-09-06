@@ -1,0 +1,116 @@
+[
+    {
+        "id": "TX001",
+        "text": "Transaction TX001: amount $4800, time 2026-08-14 23:41, location Unknown VPN IP, flagged true",
+        "access_level": "manager",
+        "flagged_by": "Manual"
+    },
+    {
+        "id": "TX002",
+        "text": "Transaction TX002: amount $20, location Local merchant, flagged false",
+        "flagged_by": null
+    },
+    {
+        "id": "TX003",
+        "text": "Transaction TX003: amount $3200, time 2026-08-18 09:15, location London, United Kingdom, flagged false",
+        "flagged_by": null
+    },
+    {
+        "id": "TX004",
+        "text": "Transaction TX004: amount $48, time 2026-08-18 10:02, location Local merchant, flagged false",
+        "access_level": "staff"
+    },
+    {
+        "id": "TX005",
+        "text": "Transaction TX005: amount $6900, time 2026-08-19 14:27, location New device payout, flagged true"
+    },
+    {
+        "id": "TX006",
+        "text": "Transaction TX006: amount $180, time 2026-08-19 16:40, location Unknown sender transfer, flagged false",
+        "risk_level": "Medium",
+        "flagged_by": null
+    },
+    {
+        "id": "TX007",
+        "text": "Transaction TX007: amount $920, time 2026-08-20 08:55, location Digital goods merchant, flagged true",
+        "risk_level": "Medium",
+        "flagged_by": "Manual"
+    },
+    {
+        "id": "TX008",
+        "text": "Transaction TX008: amount $650, time 2026-08-20 11:10, location New online merchant, flagged true",
+        "risk_level": "Medium"
+    },
+    {
+        "id": "TX009",
+        "text": "Transaction TX009: amount $75, time 2026-08-20 11:35, location Local merchant, flagged false",
+        "risk_level": "Low",
+        "flagged_by": null
+    },
+    {
+        "id": "TX010",
+        "text": "Transaction TX010: amount $350, time 2026-08-20 12:20, location New overseas online merchant, flagged true",
+        "risk_level": "Medium",
+        "flagged_by": "Manual"
+    },
+    {
+        "id": "TX011",
+        "text": "Transaction TX011: amount $15, time 2026-08-20 13:05, location Local coffee shop, flagged false",
+        "risk_level": "Low",
+        "flagged_by": null
+    },
+    {
+        "id": "TX012",
+        "text": "Transaction TX012: amount $275, time 2026-08-20 13:28, location Online electronics store, flagged false",
+        "risk_level": "Medium",
+        "flagged_by": null
+    },
+    {
+        "id": "TX013",
+        "text": "Transaction TX013: amount $4200, time 2026-08-20 14:11, location International wire transfer, flagged true",
+        "risk_level": "High",
+        "flagged_by": "AI"
+    },
+    {
+        "id": "TX014",
+        "text": "Transaction TX014: amount $68, time 2026-08-20 14:46, location Grocery merchant, flagged false",
+        "risk_level": "Low",
+        "flagged_by": null
+    },
+    {
+        "id": "TX015",
+        "text": "Transaction TX015: amount $780, time 2026-08-20 15:18, location New mobile wallet payee, flagged true",
+        "risk_level": "Medium",
+        "flagged_by": "Manual"
+    },
+    {
+        "id": "TX016",
+        "text": "Transaction TX016: amount $125, time 2026-08-20 15:42, location Fuel station, flagged false",
+        "risk_level": "Low",
+        "flagged_by": null
+    },
+    {
+        "id": "TX017",
+        "text": "Transaction TX017: amount $5600, time 2026-08-20 16:09, location Unknown overseas merchant, flagged false",
+        "risk_level": "High",
+        "flagged_by": null
+    },
+    {
+        "id": "TX018",
+        "text": "Transaction TX018: amount $430, time 2026-08-20 16:37, location Digital subscription service, flagged false",
+        "risk_level": "Medium",
+        "flagged_by": null
+    },
+    {
+        "id": "TX019",
+        "text": "Transaction TX019: amount $32, time 2026-08-20 17:02, location Local pharmacy, flagged false",
+        "risk_level": "Low",
+        "flagged_by": null
+    },
+    {
+        "id": "TX020",
+        "text": "Transaction TX020: amount $3100, time 2026-08-20 17:26, location New device payment, flagged false",
+        "risk_level": "High",
+        "flagged_by": null
+    }
+]
