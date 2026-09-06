@@ -18,9 +18,13 @@ My primary contribution to IntelliHub focused on the frontend and user interface
 My contributions included:
 
 **Dashboard UI** — Worked on the dashboard interface and presentation of key information to provide users with a clear overview of the system.
+
 **Knowledge Search Interface** — Worked on the Knowledge Search feature, including the frontend search interaction and presentation of retrieved internal information.
+
 **Login Interface** — Contributed to parts of the login page and authentication-related user flow.
+
 **UI/UX Development** — Focused mainly on the overall interface design, page layouts, navigation, visual consistency, and usability across the prototype.
+
 **Frontend Integration** — Helped connect frontend components with the project's backend functions and data to ensure that key prototype features could be demonstrated during the hackathon.
 
 Through this project, I gained practical experience in **rapid prototyping, frontend development, UI/UX design, teamwork, problem-solving, and integrating different system components under hackathon time constraints**.
